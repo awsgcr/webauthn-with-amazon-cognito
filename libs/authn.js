@@ -21,7 +21,7 @@ router.use(express.json());
 
 const f2l = new Fido2Lib({
     timeout: 30*1000*60,
-    rpId: 'auth.chaoqun.us',
+    rpId: '',
     rpName: "my-app",
     challengeSize: 32,
     cryptoParams: [-7]

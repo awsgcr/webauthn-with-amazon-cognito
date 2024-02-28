@@ -18,8 +18,8 @@
   let globalRegisteredCredentialsJSON = {};
   
   let poolData = {
-    UserPoolId: 'ap-southeast-1_JIi7tYFv0', // Your user pool id here
-    ClientId: '4duqmg5o300kre6trlge71t7ck' //Your app client id here
+    UserPoolId: '', // Your user pool id here
+    ClientId: '' //Your app client id here
 
     
   };
