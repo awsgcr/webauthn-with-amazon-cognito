@@ -14,6 +14,12 @@ $ git clone https://github.com/aws-samples/webauthn-with-amazon-cognito.git
 $ cd webauthn-with-amazon-cognito
 ```
 ###### Create Cognito resaources and lambda triggers
+Upload the function code into S3 and zip these files
+```sh
+cd aws
+./zip_upload.sh
+```
+
 ```sh
 $ aws cloudformation create-stack --stack-name webauthn-cognito --template-body file://aws/UserPoolTemplate.yaml --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_IAM CAPABILITY_NAMED_IAM --region us-west-2
 ```
@@ -28,6 +34,12 @@ Edit the file public/webauthn-client.js to use the new user-pool that you just c
     ClientId: 'app_client_id'
   };
 ```
+Enable SSL visit, Edit the file server.js, and specify your private key and cert file which is generated from the certification provider(Such as Let's Encrypt)
+```javascript
+const privateKey = fs.readFileSync('YOUR_PRIVATE_KEY_FILE', 'utf8');
+const certificate = fs.readFileSync('YOUR_PRIVATE_CERT_FILE', 'utf8');
+```
+
 ###### Install and run the application
 ```sh
 $ npm install
