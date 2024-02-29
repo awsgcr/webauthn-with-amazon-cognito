@@ -50,8 +50,8 @@ func jwkToRSAPublicKey(jwk *JWK) (*rsa.PublicKey, error) {
 func main() {
     // 假设你已经有了从 Cognito JWKs 端点获取的 JSON 字符串
 
-	userPoolId := "ap-southeast-1_JIi7tYFv0"
-    region := "ap-southeast-1"
+	userPoolId := ""
+    region := ""
 
 	jwksUrl := fmt.Sprintf("https://cognito-idp.%s.amazonaws.com/%s/.well-known/jwks.json", region, userPoolId)
     resp, err := http.Get(jwksUrl)

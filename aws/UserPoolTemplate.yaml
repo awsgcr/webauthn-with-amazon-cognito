@@ -13,6 +13,7 @@ Resources:
         DefineAuthChallenge: !GetAtt DefineAuthChallenge.Arn
         CreateAuthChallenge: !GetAtt CreateAuthChallenge.Arn
         VerifyAuthChallengeResponse: !GetAtt VerifyAuthChallenge.Arn
+        PreSignUp: !GetAtt PreSignup.Arn
       Schema:
         - AttributeDataType: String
           Name: publicKeyCred
@@ -37,14 +38,32 @@ Resources:
       ReadAttributes:
         - email
         - name
-        
+
+  PreSignup:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-PreSignup
+      CodeUri: s3://billysun-child-singapore/PreSignup.zip
+      Handler: PreSignup.handler
+      Runtime: nodejs20.x
+      MemorySize: 1024
+      Timeout: 30
+      Tracing: Active
+  PreSignupPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt PreSignup.Arn
+      Principal: cognito-idp.amazonaws.com
+      Action: lambda:InvokeFunction
+      SourceArn: !GetAtt UserPool.Arn
+
   DefineAuthChallenge:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-DefineAuthChallenge
-      CodeUri: s3://webauthn-with-amazon-cognito-billysun/DefineAuthChallenge
-      Handler: index.handler
-      Runtime: nodejs14.x
+      CodeUri: s3://billysun-child-singapore/DefineAuthChallenge.zip
+      Handler: DefineAuthChallenge.handler
+      Runtime: nodejs20.x
       MemorySize: 1024
       Timeout: 30
       Tracing: Active
@@ -60,9 +79,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-CreateAuthChallenge
-      CodeUri: s3://webauthn-with-amazon-cognito-billysun/CreateAuthChallenge
-      Handler: index.handler
-      Runtime: nodejs14.x
+      CodeUri: s3://billysun-child-singapore/CreateAuthChallenge.zip
+      Handler: CreateAuthChallenge.handler
+      Runtime: nodejs20.x
       MemorySize: 1024
       Timeout: 30
       Tracing: Active
@@ -78,9 +97,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-VerifyAuthChallenge
-      CodeUri: s3://webauthn-with-amazon-cognito-billysun/VerifyAuthChallenge
-      Handler: index.handler
-      Runtime: nodejs14.x
+      CodeUri: s3://billysun-child-singapore/VerifyAuthChallenge.zip
+      Handler: VerifyAuthChallenge.handler
+      Runtime: nodejs20.x
       MemorySize: 1024
       Timeout: 30
       Tracing: Active
